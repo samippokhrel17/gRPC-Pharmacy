@@ -1,0 +1,45 @@
+"use strict";
+
+const path = require("path");
+const dotenv = require("dotenv");
+dotenv.config({
+  path: path.resolve(process.cwd(), ".env"),
+});
+console.log(path.resolve(process.cwd(), ".env"));
+const grpc = require("@grpc/grpc-js");
+const protoLoader = require("@grpc/proto-loader");
+const { dbHelper } = require("./helper");
+const packageDefinition = protoLoader.loadSync("./proto/pharmacy.rpc.proto", {
+  keepCase: true,
+  longs: "string",
+  defaults: true,
+});
+const port = process.env.GRPC_PORT;
+const server = new grpc.Server();
+const simpleProto = grpc.loadPackageDefinition(packageDefinition);
+
+// Grpc Methods
+const simpleServiceCtl = require("./modules");
+
+// Check if the service object exists before using it
+if (simpleProto.pharmacy && simpleProto.pharmacy.rpc && simpleProto.pharmacy.rpc.pharmacyService) {
+  // Add the 'create' method to the server's service definition
+  server.addService(simpleProto.pharmacy.rpc.pharmacyService.service, {
+    create: simpleServiceCtl.create, // Implement the create method in your simpleServiceCtl module
+  });
+
+  // Bind the server to the specified port
+  server.bindAsync(
+    `0.0.0.0:${port}`,
+    grpc.ServerCredentials.createInsecure(),
+    async (err, port) => {
+      if (err) return err;
+      console.log("Server running on port ", port);
+
+      // Initialize the database helper
+      await dbHelper.init();
+    }
+  );
+} else {
+  console.error("Error: Failed to find the pharmacy service definition.");
+}
