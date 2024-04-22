@@ -1,0 +1,7 @@
+syntax = "proto3";
+package example.pharmacy.rpc;
+import "pharmacy.proto";
+
+service pharmacyService{
+    rpc create(example.pharmacy.CreateCustomer) returns (example.pharmacy.Response);
+}
