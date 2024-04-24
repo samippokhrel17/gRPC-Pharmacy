@@ -11,3 +11,11 @@ message Response{
     int32 status = 1;
     string message = 2;
 }
+
+message CreateDoctor{
+    string firstName = 1;
+    string lastName = 2; 
+    string email = 3;
+    string specilization = 4;
+    int32 contact = 5;
+}

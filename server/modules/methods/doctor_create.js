@@ -1,7 +1,7 @@
 "use strict";
 
 (() => {
-  const create = require("./../sql/create_customerSql");
+  const create = require("./../sql/doctor_create");
   const httpStatus = require("http-status");
   module.exports = async (call, callback) => {
     try {

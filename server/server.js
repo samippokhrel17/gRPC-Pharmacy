@@ -20,7 +20,8 @@ const simpleProto = grpc.loadPackageDefinition(packageDefinition);
 const simpleServiceCtl = require("./modules");
 
 server.addService(simpleProto.example.pharmacy.rpc.pharmacyService.service, {
-  createPharmacy: simpleServiceCtl.create,
+  createCustomer: simpleServiceCtl.createCustomer,
+  CreateDoctor: simpleServiceCtl.createDoctor,
 });
 
 server.bindAsync(
