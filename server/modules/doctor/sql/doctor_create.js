@@ -1,6 +1,6 @@
 "use strict";
 (() => {
-  const { dbHelper } = require("../../helper");
+  const { dbHelper } = require("../../../helper");
   module.exports = async (call, callback) => {
     let connection;
     try {
@@ -8,15 +8,14 @@
       let insert = {
         firstName: call.firstName,
         lastName: call.lastName,
+        email: call.email,
+        specilization: call.specilization,
         contact: call.contact,
       };
-      const [rows] = await dbHelper.query(
-        `insert into customer set ? `,
-        insert
-      );
+      const [rows] = await dbHelper.query(`insert into doctor set ? `, insert);
       if (rows.insertId > 0) {
         response.status = true;
-        response.message = "Created Successfully";
+        response.message = "Doctor Table Created Successfully";
       }
       return response;
     } catch (error) {

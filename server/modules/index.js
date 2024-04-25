@@ -1,6 +1,6 @@
 "use strict";
 
 module.exports = {
-  createCustomer: require("./methods/create_customer"),
-  createDoctor: require("./methods/doctor_create"),
+  createCustomer: require("./customer/methods/create_customer"),
+  createDoctor: require("./doctor/methods/doctor_create"),
 };
