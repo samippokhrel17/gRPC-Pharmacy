@@ -24,6 +24,18 @@ const mysql = require("mysql2/promise");
       throw error;
     }
   };
+
+  dbHelper.executeQuery = async (query, fields) => {
+    try {
+      let res = dbClient.query(query, fields);
+      dbClient.query("commit");
+      return res;
+    } catch (error) {
+      console.error("Error", error);
+      throw error;
+    }
+  };
+
   dbHelper.releaseConnection = async (connection) => {
     try {
       return await dbClient.releaseConnection(connection);
@@ -36,6 +48,15 @@ const mysql = require("mysql2/promise");
     try {
       return await dbClient.query(args, params);
     } catch (error) {
+      throw error;
+    }
+  };
+
+  dbHelper.format = (query, args) => {
+    try {
+      return dbClient.format(query, args);
+    } catch (error) {
+      console.error({}, "Error", error);
       throw error;
     }
   };

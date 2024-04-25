@@ -3,6 +3,9 @@ package example.pharmacy.rpc;
 import "pharmacy.proto";
 
 service pharmacyService{
-    rpc createCustomer(example.pharmacy.CreateCustomer) returns (example.pharmacy.Response);
+    rpc CreateCustomer(example.pharmacy.CreateCustomer) returns (example.pharmacy.Response);
     rpc CreateDoctor(example.pharmacy.CreateDoctor) returns (example.pharmacy.Response);
+    rpc GetCustomerInfoRequest(example.pharmacy.GetCustomerInfoRequest) returns (example.pharmacy.GetCustomerInfoResponse);
+    rpc GetAllCustomerInfo(example.pharmacy.Empty) returns (example.pharmacy.GetCustomerInfoResponse);
+    rpc UpdateCustomer(example.pharmacy.UpdateRequest) returns (example.pharmacy.Response);
 }

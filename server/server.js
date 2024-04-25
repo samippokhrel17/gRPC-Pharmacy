@@ -19,9 +19,14 @@ const simpleProto = grpc.loadPackageDefinition(packageDefinition);
 // Grpc Methods
 const simpleServiceCtl = require("./modules");
 
+const customerServieLoader = require("./modules/customer");
+
 server.addService(simpleProto.example.pharmacy.rpc.pharmacyService.service, {
   createCustomer: simpleServiceCtl.createCustomer,
   CreateDoctor: simpleServiceCtl.createDoctor,
+  GetCustomerInfoRequest: customerServieLoader.getCustomerInfo,
+  GetAllCustomerInfo: customerServieLoader.getAllCustomerInfo,
+  UpdateCustomer: customerServieLoader.updateCustomerInfo,
 });
 
 server.bindAsync(

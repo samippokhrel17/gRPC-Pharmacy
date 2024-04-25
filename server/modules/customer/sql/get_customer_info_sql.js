@@ -5,30 +5,31 @@ const httpStatus = require("http-status");
 (() => {
   const { dbHelper } = require("../../../helper");
   module.exports = async (call, callback) => {
+    let connection;
     try {
       let response = {
         status: httpStatus.BAD_REQUEST,
         message: "Data Not found",
       };
 
-      let insert = [
-        call.approved_medicine,
-        call.quantity_given,
-        call.customerId,
-      ];
+      let query = await dbHelper.format(
+        ` 
+        SELECT 
+    customer_id,
+    firstName,
+    lastName,
+    contact
 
-      let query = await dbHelper.query(
-        `
-        UPDATE grpc_pharmacy.customer SET approved_medicine = ?,
-        quantity_given = ? WHERE customer_id = ?`,
-        insert
+FROM
+    grpc_pharmacy.customer where customer_id = "${call.customerId}"
+`
       );
       const [result] = await dbHelper.executeQuery(query);
 
       if (result && result.length > 0) {
-        response.status = httpStatus.OK;
-        response.message = "Customer Data updated successfully";
-        response.customer = result;
+        (response.status = httpStatus.OK),
+          (response.message = "Customer Data fetch succesfully!11111111111!"),
+          (response.customer = result[0]);
       }
       return response;
     } catch (error) {

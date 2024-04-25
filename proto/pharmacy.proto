@@ -19,3 +19,26 @@ message CreateDoctor{
     string specilization = 4;
     int32 contact = 5;
 }
+
+
+message GetCustomerInfoRequest {
+    string customerId = 1;
+}
+
+message GetCustomerInfoResponse {
+    int32 status = 1;
+    string message = 2;
+    repeated CreateCustomer customer = 3;
+}
+
+message Empty{
+
+}
+
+message UpdateRequest{
+    string customerId = 1;
+    string approved_medicine = 2;
+    int32 quantity_given = 3;
+}
+
+
